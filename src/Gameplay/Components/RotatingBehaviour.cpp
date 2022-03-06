@@ -1,4 +1,5 @@
 #include "Gameplay/Components/RotatingBehaviour.h"
+#include "Gameplay/Components/TestComponent.h"
 
 #include "Gameplay/GameObject.h"
 
@@ -16,6 +17,7 @@ void RotatingBehaviour::Update(float deltaTime) {
 		{
 			GetGameObject()->GetParent()->GetChildren()[i]->Get<RotatingBehaviour>()->Flip();
 			GetGameObject()->GetParent()->GetChildren()[i]->Get<RotatingBehaviour>()->SpeedUp();
+			GetGameObject()->GetParent()->GetChildren()[i]->Get<TestComponent>()->ColorChange(2);
 		}
 	}
 }

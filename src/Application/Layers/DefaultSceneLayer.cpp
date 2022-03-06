@@ -46,6 +46,7 @@
 #include "Gameplay/Components/MaterialSwapBehaviour.h"
 #include "Gameplay/Components/TriggerVolumeEnterBehaviour.h"
 #include "Gameplay/Components/SimpleCameraControl.h"
+#include "Gameplay/Components/TestComponent.h"
 
 // Physics
 #include "Gameplay/Physics/RigidBody.h"
@@ -150,8 +151,15 @@ void DefaultSceneLayer::_CreateScene()
 		});
 		multiTextureShader->SetDebugName("Multitexturing");
 
+		//Shader used for invaders
+		ShaderProgram::Sptr invaderShader = ResourceManager::CreateAsset<ShaderProgram>(std::unordered_map<ShaderPartType, std::string>{
+			{ ShaderPartType::Vertex, "shaders/vertex_shaders/invader_vert.glsl" },
+			{ ShaderPartType::Fragment, "shaders/fragment_shaders/invader_frag.glsl" }
+		});
+		invaderShader->SetDebugName("Invader Shader");
+
 		// Load in the meshes
-		MeshResource::Sptr monkeyMesh = ResourceManager::CreateAsset<MeshResource>("Monkey.obj");
+		//MeshResource::Sptr monkeyMesh = ResourceManager::CreateAsset<MeshResource>("Monkey.obj");
 		MeshResource::Sptr invaderMesh = ResourceManager::CreateAsset<MeshResource>("SpaceInvaderModel.obj");
 
 
@@ -278,6 +286,29 @@ void DefaultSceneLayer::_CreateScene()
 			multiTextureMat->Set("u_Scale", 0.1f);
 		}
 
+		Material::Sptr invaderMat = ResourceManager::CreateAsset<Material>(invaderShader);
+		{
+			Texture2D::Sptr    invaderBlue = ResourceManager::CreateAsset<Texture2D>("textures/InvaderBlueTexture.png");
+			Texture2D::Sptr    invaderOrange = ResourceManager::CreateAsset<Texture2D>("textures/InvaderOrangeTexture.png");
+			Texture2D::Sptr    invaderPink = ResourceManager::CreateAsset<Texture2D>("textures/InvaderPinkTexture.png");
+			Texture2D::Sptr    invaderPurple = ResourceManager::CreateAsset<Texture2D>("textures/InvaderPurpleTexture.png");
+			Texture2D::Sptr    invaderRed = ResourceManager::CreateAsset<Texture2D>("textures/InvaderRedTexture.png");
+			Texture2D::Sptr    invaderYellow = ResourceManager::CreateAsset<Texture2D>("textures/InvaderYellowTexture.png");
+			invaderMat->Name = "InvaderMat";
+			invaderMat->Set("u_Material.Diffuse", invaderBlue);
+			invaderMat->Set("u_Material.Shininess", 0.5f);
+
+			invaderMat->Set("u_InvaderMaterial.blueDiffuse", invaderBlue);
+			invaderMat->Set("u_InvaderMaterial.redDiffuse", invaderRed);
+			invaderMat->Set("u_InvaderMaterial.pinkDiffuse", invaderPink);
+			invaderMat->Set("u_InvaderMaterial.pinkDiffuse", invaderPink);
+			invaderMat->Set("u_InvaderMaterial.purpleDiffuse", invaderPurple);
+			invaderMat->Set("u_InvaderMaterial.yellowDiffuse", invaderYellow);
+			invaderMat->Set("u_InvaderMaterial.orangeDiffuse", invaderOrange);
+
+			invaderMat->Set("u_InvaderMaterial.selection", 6); //defaults to blue texture
+		}
+
 		// Create some lights for our scene
 		scene->Lights.resize(3);
 		scene->Lights[0].Position = glm::vec3(0.0f, 1.0f, 3.0f);
@@ -333,16 +364,18 @@ void DefaultSceneLayer::_CreateScene()
 
 
 		GameObject::Sptr mothership = scene->CreateGameObject("mothership");
+		
 
 		
 		GameObject::Sptr invader = scene->CreateGameObject("Invader");
 		{
 			invader->SetPostion(glm::vec3(-16, 0, 0));
+			
 
 			// Create and attach a RenderComponent to the object to draw our mesh
 			RenderComponent::Sptr renderer = invader->Add<RenderComponent>();
 			renderer->SetMesh(invaderMesh);
-			renderer->SetMaterial(boxMaterial);
+			renderer->SetMaterial(invaderMat);
 
 			// Attach a plane collider that extends infinitely along the X/Y axis
 			RigidBody::Sptr physics = invader->Add<RigidBody>(/*static by default*/);
@@ -350,6 +383,8 @@ void DefaultSceneLayer::_CreateScene()
 
 			RotatingBehaviour::Sptr move = invader->Add<RotatingBehaviour>();
 			move->RotationSpeed = glm::vec3(10, 0, 0);
+
+			TestComponent::Sptr inv = invader->Add<TestComponent>();
 
 			mothership->AddChild(invader);
 		}
@@ -361,7 +396,7 @@ void DefaultSceneLayer::_CreateScene()
 			// Create and attach a RenderComponent to the object to draw our mesh
 			RenderComponent::Sptr renderer = invaderTwo->Add<RenderComponent>();
 			renderer->SetMesh(invaderMesh);
-			renderer->SetMaterial(boxMaterial);
+			renderer->SetMaterial(invaderMat);
 
 			// Attach a plane collider that extends infinitely along the X/Y axis
 			RigidBody::Sptr physics = invaderTwo->Add<RigidBody>(/*static by default*/);
@@ -369,6 +404,8 @@ void DefaultSceneLayer::_CreateScene()
 
 			RotatingBehaviour::Sptr move = invaderTwo->Add<RotatingBehaviour>();
 			move->RotationSpeed = glm::vec3(10, 0, 0);
+
+			TestComponent::Sptr inv = invaderTwo->Add<TestComponent>();
 
 			mothership->AddChild(invaderTwo);
 		}
@@ -380,7 +417,7 @@ void DefaultSceneLayer::_CreateScene()
 			// Create and attach a RenderComponent to the object to draw our mesh
 			RenderComponent::Sptr renderer = invaderThree->Add<RenderComponent>();
 			renderer->SetMesh(invaderMesh);
-			renderer->SetMaterial(boxMaterial);
+			renderer->SetMaterial(invaderMat);
 
 			// Attach a plane collider that extends infinitely along the X/Y axis
 			RigidBody::Sptr physics = invaderThree->Add<RigidBody>(/*static by default*/);
@@ -388,6 +425,8 @@ void DefaultSceneLayer::_CreateScene()
 
 			RotatingBehaviour::Sptr move = invaderThree->Add<RotatingBehaviour>();
 			move->RotationSpeed = glm::vec3(10, 0, 0);
+
+			TestComponent::Sptr inv = invaderThree->Add<TestComponent>();
 
 			mothership->AddChild(invaderThree);
 		}
@@ -399,7 +438,7 @@ void DefaultSceneLayer::_CreateScene()
 			// Create and attach a RenderComponent to the object to draw our mesh
 			RenderComponent::Sptr renderer = invaderFour->Add<RenderComponent>();
 			renderer->SetMesh(invaderMesh);
-			renderer->SetMaterial(boxMaterial);
+			renderer->SetMaterial(invaderMat);
 
 			// Attach a plane collider that extends infinitely along the X/Y axis
 			RigidBody::Sptr physics = invaderFour->Add<RigidBody>(/*static by default*/);
@@ -407,6 +446,8 @@ void DefaultSceneLayer::_CreateScene()
 
 			RotatingBehaviour::Sptr move = invaderFour->Add<RotatingBehaviour>();
 			move->RotationSpeed = glm::vec3(10, 0, 0);
+
+			TestComponent::Sptr inv = invaderFour->Add<TestComponent>();
 
 			mothership->AddChild(invaderFour);
 		}
@@ -418,7 +459,7 @@ void DefaultSceneLayer::_CreateScene()
 			// Create and attach a RenderComponent to the object to draw our mesh
 			RenderComponent::Sptr renderer = invaderFive->Add<RenderComponent>();
 			renderer->SetMesh(invaderMesh);
-			renderer->SetMaterial(boxMaterial);
+			renderer->SetMaterial(invaderMat);
 
 			// Attach a plane collider that extends infinitely along the X/Y axis
 			RigidBody::Sptr physics = invaderFive->Add<RigidBody>(/*static by default*/);
@@ -427,10 +468,12 @@ void DefaultSceneLayer::_CreateScene()
 			RotatingBehaviour::Sptr move = invaderFive->Add<RotatingBehaviour>();
 			move->RotationSpeed = glm::vec3(10, 0, 0);
 
+			TestComponent::Sptr inv = invaderFive->Add<TestComponent>();
+
 			mothership->AddChild(invaderFive);
 		}
 
-
+		
 
 
 
