@@ -333,10 +333,8 @@ void DefaultSceneLayer::_CreateScene()
 		// Set up the scene's camera
 		GameObject::Sptr camera = scene->MainCamera->GetGameObject()->SelfRef();
 		{
-			camera->SetPostion({ -9, -6, 15 });
-			camera->LookAt(glm::vec3(0.0f));
-
-			camera->Add<SimpleCameraControl>();
+			camera->SetPostion({ 1.241f, -24.591, 30.828 });
+			camera->SetRotation(glm::vec3(4.8f, 0.0f, -0.5f));
 
 			// This is now handled by scene itself!
 			//Camera::Sptr cam = camera->Add<Camera>();
