@@ -310,16 +310,30 @@ void DefaultSceneLayer::_CreateScene()
 		}
 
 		// Create some lights for our scene
-		scene->Lights.resize(3);
-		scene->Lights[0].Position = glm::vec3(0.0f, 1.0f, 3.0f);
-		scene->Lights[0].Color = glm::vec3(1.0f, 1.0f, 1.0f);
+		scene->Lights.resize(6);
+		scene->Lights[0].Position = glm::vec3(0.0f, -46.330f, 3.0f); //player homebase light //green middle
+		scene->Lights[0].Color = glm::vec3(0.0f, 1.0f, 0.0f);
 		scene->Lights[0].Range = 100.0f;
 
-		scene->Lights[1].Position = glm::vec3(1.0f, 0.0f, 3.0f);
-		scene->Lights[1].Color = glm::vec3(0.2f, 0.8f, 0.1f);
+		scene->Lights[1].Position = glm::vec3(1.0f, 0.0f, 3.0f); //enemy base //red middle
+		scene->Lights[1].Color = glm::vec3(1.0f, 0.0f, 0.0f);
+		scene->Lights[1].Range = 100.0f;
 
-		scene->Lights[2].Position = glm::vec3(0.0f, 1.0f, 3.0f);
-		scene->Lights[2].Color = glm::vec3(1.0f, 0.2f, 0.1f);
+		scene->Lights[2].Position = glm::vec3(-33.0f, 0.0f, 3.0f); //enemy base //red left
+		scene->Lights[2].Color = glm::vec3(1.0f, 0.0f, 0.0f);
+		scene->Lights[2].Range = 100.0f;
+
+		scene->Lights[3].Position = glm::vec3(33.0f, 0.0f, 3.0f); //enemy base //red right
+		scene->Lights[3].Color = glm::vec3(1.0f, 0.0f, 0.0f);
+		scene->Lights[3].Range = 100.0f;
+
+		scene->Lights[4].Position = glm::vec3(-33.0f, -46.330f, 3.0f); //player homebase //green left
+		scene->Lights[4].Color = glm::vec3(0.0f, 1.0f, 0.0f);
+		scene->Lights[4].Range = 100.0f;
+
+		scene->Lights[5].Position = glm::vec3(33.0f, -46.330f, 3.0f); //player homebase //green right
+		scene->Lights[5].Color = glm::vec3(0.0f, 1.0f, 0.0f);
+		scene->Lights[5].Range = 100.0f;
 
 		// We'll create a mesh that is a simple plane that we can resize later
 		MeshResource::Sptr planeMesh = ResourceManager::CreateAsset<MeshResource>();

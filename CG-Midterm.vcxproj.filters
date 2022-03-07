@@ -135,6 +135,9 @@
     <ClInclude Include="src\Gameplay\Components\SimpleCameraControl.h">
       <Filter>Gameplay\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Gameplay\Components\TestComponent.h">
+      <Filter>Gameplay\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Gameplay\Components\TriggerVolumeEnterBehaviour.h">
       <Filter>Gameplay\Components</Filter>
     </ClInclude>
@@ -306,7 +309,6 @@
     <ClInclude Include="src\Utils\Windows\FileDialogs.h">
       <Filter>Utils\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\Gameplay\Components\TestComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application\Application.cpp">
@@ -382,6 +384,9 @@
       <Filter>Gameplay\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Gameplay\Components\SimpleCameraControl.cpp">
+      <Filter>Gameplay\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gameplay\Components\TestComponent.cpp">
       <Filter>Gameplay\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Gameplay\Components\TriggerVolumeEnterBehaviour.cpp">
@@ -517,6 +522,5 @@
       <Filter>Utils\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\entry_point.cpp" />
-    <ClCompile Include="src\Gameplay\Components\TestComponent.cpp" />
   </ItemGroup>
 </Project>
